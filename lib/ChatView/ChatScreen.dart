@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -670,13 +669,11 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin,W
     pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
     imageFile = File(pickedFile.path);
 
-    if (imageFile != null) {
-      setState(() {
-        isLoading = true;
-      });
-      uploadFile(imageFile,1);
+    setState(() {
+      isLoading = true;
+    });
+    uploadFile(imageFile,1);
     }
-  }
   Future filePicker(BuildContext context,fileType) async {
     File file;
     String fileName;

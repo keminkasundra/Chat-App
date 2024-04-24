@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -29,7 +28,7 @@ class AuthService  {
   Future <User> googleSignin(BuildContext context) async {
     User currentUser;
     try {
-      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken, );
       final User user = await FirebaseAuth.instance.signInWithCredential(credential).then((value) => value.user);

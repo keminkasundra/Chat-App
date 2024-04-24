@@ -80,12 +80,9 @@ class FullPhoto extends StatelessWidget {
     }
     imageFile = File(pickedFile.path);
 
-    if (imageFile != null) {
-
-      uploadFile(imageFile,1);
-      Navigator.pop(context);
+    uploadFile(imageFile,1);
+    Navigator.pop(context);
     }
-  }
 
   Future uploadFile(file,fileType) async {
     String Url;
