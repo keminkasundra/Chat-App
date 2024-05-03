@@ -6,11 +6,11 @@ import 'package:firebase_chat/authservice.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 class User {
-  final String? name;
-  final String? email;
+  // final String? name;
+  // final String? email;
   // Other user attributes
 
-  User({required this.name, required this.email});
+  // User({required this.name, required this.email});
 }
 const String clientId = '37266721800-s6km4jf18vmnnf4t76bieg5pejud2odr.apps.googleusercontent.com'; 
 

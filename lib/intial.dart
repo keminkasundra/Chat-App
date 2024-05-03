@@ -43,13 +43,14 @@ late IO.Socket socket;
       });
       socket.connect();
       print('Connected to Socket.io server!');
-      //  socket.emit('msg', 'test');
+       socket.emit('chat_message', 'test');
+       socket.on('messageSuccess', (data) => print(data));
+      // socket.on('chat_message')
+      // socket.emit('chat_message', {'message': 'Hello, World!'});
 // socket.emit(event)
       // Handle connection events (optional)
       socket.on('connect', (_) => print('Connected'));
-      socket.io.on("reconnect", (attempt) => {
-  // ...
-});
+
       socket.on('disconnect', (_) => print('Disconnected'));
 
       // Check for logged-in status using your own logic (replace with your implementation)

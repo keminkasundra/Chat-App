@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class User {
   final String name;
@@ -14,6 +15,8 @@ class User {
   User({required this.name, required this.email});
 }
 
+late IO.Socket socket;
+
 const String clientId =
     '37266721800-s6km4jf18vmnnf4t76bieg5pejud2odr.apps.googleusercontent.com';
 
@@ -22,11 +25,11 @@ class AuthService {
 
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: [
     'email',
-     'openid', 'profile',
+    'openid',
+    'profile',
     'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/contacts.readonly',
     'https://www.googleapis.com/auth/userinfo.profile',
-    
   ], clientId: clientId);
   // DatabaseReference rootRef = FirebaseDatabase.instance.reference();
 
@@ -218,14 +221,36 @@ class AuthService {
       }
 
       // Process user data
-      currentUser = User(
-        name: googleUser?.displayName ?? "",
-        email: googleUser?.email ?? "",
-        // Other user attributes
-      );
+      // currentUser = User(
+      //   name: googleUser?.displayName ?? "",
+      //   email: googleUser?.email ?? "",
+      //   // Other user attributes
+      // );
 
       // Store user data locally or perform any necessary actions
       _googleSignIn.signInSilently();
+
+      try {
+        // Replace with your actual Socket.io server URL
+        // socket = IO.io('http://localhost:3000' , <String, dynamic>{
+        socket = IO.io('http://192.168.1.13:8080', <String, dynamic>{
+          'transports': ['websocket'], // Specify transport (optional)
+        });
+        socket.connect();
+        print('Connected to Socket.io server!');
+        socket.emit('chat_message', '$googleUser');
+        socket.on(
+            'messageSuccess', (data) => {print(data)});
+        // socket.on('chat_message')
+        // socket.emit('chat_message', {'message': 'Hello, World!'});
+// socket.emit(event)
+        // Handle connection events (optional)
+        socket.on('connect', (_) => print('Connected'));
+
+        socket.on('disconnect', (_) => print('Disconnected'));
+      } catch (e) {
+        print('Error connecting to Socket.io server: $e');
+      }
       return currentUser;
     } catch (e) {
       print(e);
