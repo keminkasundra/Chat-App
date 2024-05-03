@@ -47,6 +47,9 @@ late IO.Socket socket;
 // socket.emit(event)
       // Handle connection events (optional)
       socket.on('connect', (_) => print('Connected'));
+      socket.io.on("reconnect", (attempt) => {
+  // ...
+});
       socket.on('disconnect', (_) => print('Disconnected'));
 
       // Check for logged-in status using your own logic (replace with your implementation)
