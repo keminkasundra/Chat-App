@@ -43,7 +43,7 @@ late IO.Socket socket;
       });
       socket.connect();
       print('Connected to Socket.io server!');
-       socket.emit('msg', 'test');
+      //  socket.emit('msg', 'test');
 // socket.emit(event)
       // Handle connection events (optional)
       socket.on('connect', (_) => print('Connected'));
